@@ -3,9 +3,9 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 import { NavigationContainer } from "@react-navigation/native";
 import WelcomeScreen from "../screens/WelcomeScreen";
-import ListaProducto from "../screens/ListaProducto";
-import RegistroProductoScreen from "../screens/RegistroProductoScreen";
-import IntegrantesScreen from "../screens/IntegrantesScreen";
+import RegistroScreen from "../screens/RegistroScreen";
+import JuegoScreen from "../screens/JuegoScreen";
+import LoginScreen from "../screens/LoginScreen";
 
 const Tab = createMaterialTopTabNavigator();
 const Stack = createStackNavigator();
@@ -13,9 +13,10 @@ const Stack = createStackNavigator();
 function MyTabs() {
   return (
     <Tab.Navigator>
-      <Tab.Screen name="Registro producto" component={RegistroProductoScreen} />
-      <Tab.Screen name="Lista producto" component={ListaProducto} />
-      <Tab.Screen name="Integrantes" component={IntegrantesScreen} />
+      <Tab.Screen name="Registro" component={RegistroScreen} />
+
+      <Tab.Screen name="juego" component={JuegoScreen} />
+      <Tab.Screen name="Login " component={LoginScreen} />
     </Tab.Navigator>
   );
 }

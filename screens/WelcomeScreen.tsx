@@ -5,10 +5,8 @@ export default function WelcomeScreen({ navigation }: any) {
   return (
     <View>
       <Text style={styles.bigBlue}>Welcome</Text>
-      <Button
-        title="Ir a Registro"
-        onPress={() => navigation.navigate("Tabs")}
-      />
+      <Button title="opciones" onPress={() => navigation.navigate("Tabs")} />
+
       <Image
         source={{
           uri: "https://render.fineartamerica.com/images/rendered/default/print/8/8/break/images/artworkimages/medium/2/indifference-mario-sanchez-nevado.jpg",
