@@ -9,7 +9,7 @@ export default function WelcomeScreen({ navigation }: any) {
 
       <Image
         source={{
-          uri: "https://render.fineartamerica.com/images/rendered/default/print/8/8/break/images/artworkimages/medium/2/indifference-mario-sanchez-nevado.jpg",
+          uri: "http://m.gettywallpapers.com/es/wp-content/uploads/2023/06/Fondos-de-Pantalla-Calaveras-4k.jpg",
         }}
         style={styles.img}
       />
@@ -18,15 +18,15 @@ export default function WelcomeScreen({ navigation }: any) {
 }
 
 const styles = StyleSheet.create({
-  img: { width: 700, height: 700, resizeMode: "contain" },
+  img: { width: 600, height: 600, resizeMode: "contain" },
 
   container: {
     marginTop: 50,
   },
   bigBlue: {
-    color: "blue",
+    color: "rgb(77, 237, 239)",
     fontWeight: "bold",
-    fontSize: 30,
+    fontSize: 50,
   },
   red: {
     color: "red",

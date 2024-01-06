@@ -24,7 +24,7 @@ const MovimientoBoton: React.FC = () => {
         style={[styles.boton, { transform: position.getTranslateTransform() }]}
       >
         <TouchableOpacity onPress={moverBoton}>
-          <Text style={styles.textoBoton}>APLASTAFF</Text>
+          <Text style={styles.textoBoton}>¡Moverme!</Text>
         </TouchableOpacity>
       </Animated.View>
     </View>
@@ -38,9 +38,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   boton: {
-    backgroundColor: "rgb(27, 5, 87)",
-    padding: 15,
-    borderRadius: 7,
+    backgroundColor: "blue",
+    padding: 10,
+    borderRadius: 5,
   },
   textoBoton: {
     color: "white",
