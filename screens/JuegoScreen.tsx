@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   Animated,
+  ImageBackground,
 } from "react-native";
 
 const MovimientoBoton: React.FC = () => {
@@ -12,7 +13,7 @@ const MovimientoBoton: React.FC = () => {
 
   const moverBoton = () => {
     Animated.timing(position, {
-      toValue: { x: 200, y: 200 }, // Nueva posición del botón
+      toValue: { x: -50, y: -100 }, // Nueva posición del botón
       duration: 1000, // Duración de la animación en milisegundos
       useNativeDriver: false, // Necesario para algunas animaciones
     }).start();
@@ -20,6 +21,12 @@ const MovimientoBoton: React.FC = () => {
 
   return (
     <View style={styles.container}>
+      <ImageBackground
+        source={{
+          uri: "https://p4.wallpaperbetter.com/wallpaper/559/711/811/skulls-black-1280x1024-art-black-hd-art-wallpaper-preview.jpg",
+        }}
+        style={styles.img}
+      />
       <Animated.View
         style={[styles.boton, { transform: position.getTranslateTransform() }]}
       >
@@ -32,15 +39,17 @@ const MovimientoBoton: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
+  img: { flex: 1, width: 800, height: 800, resizeMode: "cover" },
   container: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "#d5cee3",
   },
   boton: {
-    backgroundColor: "rgb(27, 5, 87)",
-    padding: 15,
-    borderRadius: 7,
+    backgroundColor: "blue",
+    padding: 10,
+    borderRadius: 5,
   },
   textoBoton: {
     color: "white",
