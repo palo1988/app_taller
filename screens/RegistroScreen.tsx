@@ -89,7 +89,6 @@ export default function RegistroScreen({ navigation }: any) {
   }
   return (
     <View>
-      <Camara capturar={recuperarUrl}></Camara>
       <Text style={styles.encabezado}>Ingrese los datos:</Text>
       <Text style={styles.titulo}>Usuario</Text>
       <TextInput
@@ -114,10 +113,11 @@ export default function RegistroScreen({ navigation }: any) {
         placeholder="Escriba su contraseña"
         onChangeText={(texto) => setcontrasenia(texto)}
       />
-
+      <Camara capturar={recuperarUrl}></Camara>
       <TouchableOpacity style={styles.button} onPress={() => registroT()}>
         <Text style={styles.buttonText}>REGISTRARSE</Text>
       </TouchableOpacity>
+
     </View>
   );
 }
