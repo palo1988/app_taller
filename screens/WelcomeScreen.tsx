@@ -21,7 +21,7 @@ export default function WelcomeScreen({ navigation }: any) {
         style={styles.button}
         onPress={() => navigation.navigate("Tabs")}
       >
-        <Text style={styles.buttonText}>JUGAR</Text>
+        <Text style={styles.buttonText}>INICIAR</Text>
       </TouchableOpacity>
     </View>
   );

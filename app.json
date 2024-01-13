@@ -4,10 +4,10 @@
     "slug": "navegadores",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/img/vela.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/img/vela.png",
+      "image": "./assets/beber.png",
       "resizeMode": "contain",
       "backgroundColor": "#4913b4"
     },

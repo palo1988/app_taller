@@ -23,7 +23,7 @@ export default function LoginScreen({ navigation }: any) {
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
-        navigation.navigate("Drawer_Welcome");
+        navigation.navigate("Juego");
 
         console.log(user);
       })
@@ -76,13 +76,14 @@ export default function LoginScreen({ navigation }: any) {
     <View>
       <ImageBackground
         source={{
-          uri: "https://cdn.wallpapersafari.com/99/64/AlNU7P.jpg",
+          uri: "https://t3.ftcdn.net/jpg/05/79/59/68/360_F_579596848_TxZpIapoifodbdWuyciISYUpJQLuvcHT.jpg",
         }}
         style={styles.img}
       />
       <Text style={{ fontSize: 30 }}>Login</Text>
       <TextInput
         style={styles.input}
+        placeholderTextColor="#ededed"
         placeholder="Ingrese correo"
         onChangeText={(texto) => setCorreo(texto)}
         keyboardType="email-address"
@@ -92,6 +93,7 @@ export default function LoginScreen({ navigation }: any) {
 
       <TextInput
         style={styles.input}
+        placeholderTextColor="#ededed"
         placeholder="Ingresar contraseña"
         onChangeText={(texto) => setContrasenia(texto)}
         value={contrasenia}
@@ -114,8 +116,8 @@ export default function LoginScreen({ navigation }: any) {
 const styles = StyleSheet.create({
   img: {
     flex: 5,
-    width: 610,
-    height: 610,
+    width: 800,
+    height: 800,
     resizeMode: "center",
   },
   container: {},

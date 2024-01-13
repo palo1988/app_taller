@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getDatabase } from "firebase/database";
+import { getStorage } from "firebase/storage";
 
 //
 import { initializeAuth, getReactNativePersistence } from "firebase/auth";
@@ -15,12 +16,12 @@ const firebaseConfig = {
   messagingSenderId: "787485630976",
   appId: "1:787485630976:web:c1579cbad0470a72f3eee5",
 };
-
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
 export const db = getDatabase(app); // base de datos
 
+export const storage = getStorage(app);
 //export const auth = getAuth(app)
 ////////
 
