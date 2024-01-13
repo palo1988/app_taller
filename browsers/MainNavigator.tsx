@@ -13,10 +13,11 @@ const Stack = createStackNavigator();
 
 function MyTabs() {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator initialRouteName="Registro">
       <Tab.Screen name="Login " component={LoginScreen} />
       <Tab.Screen name="Registro" component={RegistroScreen} />
       <Tab.Screen name="Perfil" component={PerfilScreen} />
+      <Tab.Screen name="Juego" component={JuegoScreen} />
     </Tab.Navigator>
   );
 }
@@ -26,7 +27,7 @@ function MyStack() {
     <Stack.Navigator initialRouteName="Welcome">
       <Stack.Screen name="Tabs" component={MyTabs} />
       <Tab.Screen name="Welcome" component={WelcomeScreen} />
-      <Tab.Screen name="juego" component={JuegoScreen} />
+      <Tab.Screen name="Login" component={LoginScreen} />
     </Stack.Navigator>
   );
 }

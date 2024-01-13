@@ -105,7 +105,7 @@ export default function LoginScreen({ navigation }: any) {
 
       <TouchableOpacity
         style={styles.buttonReg}
-        onPress={() => navigation.navigate("Registro")}
+        onPress={() => navigation.navigate("Tabs")}
       >
         <Text style={styles.buttonTextReg}>REGISTRARSE</Text>
       </TouchableOpacity>

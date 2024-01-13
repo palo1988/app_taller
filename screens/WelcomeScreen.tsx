@@ -13,13 +13,13 @@ export default function WelcomeScreen({ navigation }: any) {
     <View style={styles.container}>
       <ImageBackground
         source={{
-          uri: "http://m.gettywallpapers.com/es/wp-content/uploads/2023/06/Fondos-de-Pantalla-Calaveras-4k.jpg",
+          uri: "https://i.blogs.es/a37f38/yellowjackets-2023-season_1920x1080/1366_2000.jpeg",
         }}
         style={styles.img}
       />
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate("Tabs")}
+        onPress={() => navigation.navigate("Login")}
       >
         <Text style={styles.buttonText}>INICIAR</Text>
       </TouchableOpacity>

@@ -17,8 +17,6 @@ import { auth } from "../config/Config";
 import Camara from "../components/Camara";
 import { storage } from "../config/Config";
 import { uploadBytes, getDownloadURL } from "firebase/storage";
-//image picker
-import * as ImagePicker from "expo-image-picker";
 
 export default function RegistroScreen({ navigation }: any) {
   const [usuario, setUsuario] = useState("");
@@ -116,7 +114,6 @@ export default function RegistroScreen({ navigation }: any) {
       <TouchableOpacity style={styles.button} onPress={() => registroT()}>
         <Text style={styles.buttonText}>REGISTRARSE</Text>
       </TouchableOpacity>
-
     </View>
   );
 }
