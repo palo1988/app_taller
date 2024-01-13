@@ -27,7 +27,6 @@ export default function RegistroScreen({ navigation }: any) {
 
   const [correo, setcorreo] = useState("");
   const [contrasenia, setcontrasenia] = useState("");
-
   const [nick, setnick] = useState("");
   const [email, setemail] = useState("");
   const [edad, setedad] = useState("");
