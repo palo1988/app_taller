@@ -41,6 +41,33 @@ export default function Juego({ navigation }: any) {
   const [sound, setSound] = useState(Audio);
 
   useEffect(() => {
+    function leer() {
+      const starCountRef = ref(db, "pruebareg/");
+      onValue(starCountRef, (snapshot) => {
+        const data = snapshot.val();
+
+        const dataTemp: any = Object.keys(data).map((nick) => ({
+          nick,
+          ...data[nick],
+        }));
+
+        setcalaveras(dataTemp);
+        setNick(nick);
+      });
+    }
+
+    leer();
+    console.log(calaveras);
+  }, []);
+
+  type producto = {
+    nick: string;
+    email: string;
+    password: string;
+    age: string;
+  };
+
+  useEffect(() => {
     // const temporizador = setInterval(() => {
     //   setTiempo((tiempoAnterior) => tiempoAnterior-1)
     // }, 1000 //Milisegundos
@@ -65,7 +92,7 @@ export default function Juego({ navigation }: any) {
       setTiempo(10);
       //Función que envía la puntuación a firebase
       // puntuacion();
-      setContador(0);
+      //setContador(0);
     }
   }, [tiempo]);
 
@@ -117,18 +144,19 @@ export default function Juego({ navigation }: any) {
     set(ref(db, "jugadores/" + nick), {
       nick: nick,
       calavera: calaveras,
+      puntaje: contador,
     });
   }
 
   // const jugador = setNick(onValue) ;
 
   // Función para guardar en Firebase
-  function puntuacion(nick: string, contador: number) {
+  /* function puntuacion() {
     set(ref(db, "puntuacion/" + nick), {
       nick: nick,
       puntaje: contador,
     });
-  }
+  }*/
 
   // const app = initializeApp(firebaseConfig);
   function logOut() {
@@ -136,15 +164,18 @@ export default function Juego({ navigation }: any) {
     signOut(auth)
       .then(() => {
         // Sign-out successful.
+
+        navigation.navigate("Login");
+        setModalVisible(false);
       })
       .catch((error) => {
         // An error happened.
+        Alert.alert("Error");
       });
-
-    navigation.navigate("Login");
   }
 
   function reiniciar() {
+    setContador(0);
     navigation.navigate("Juego");
     setModalVisible(false);
     const temporizador = setInterval(() => {
@@ -153,6 +184,7 @@ export default function Juego({ navigation }: any) {
           clearInterval(temporizador); //Detiene el temporizador
           //playSound2();
         }
+
         return tiempoAnterior - 1;
       });
     }, 1000); //Milésimas de un segundo
@@ -192,8 +224,9 @@ export default function Juego({ navigation }: any) {
   }*/
 
   function saveOut() {
+    //puntuacion();
     guardar(nick, calaveras);
-    puntuacion(nick, contador);
+
     logOut();
   }
 
