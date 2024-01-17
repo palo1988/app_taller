@@ -34,7 +34,7 @@ export default function PerfilScreen({ navigation }: any) {
     }, []);
 
 
-    type producto = {
+    type usuario = {
       nick: string;
       email: string;
       password: string;
@@ -43,11 +43,11 @@ export default function PerfilScreen({ navigation }: any) {
 
   return (
     <View>
-      <Text style={styles.titulo}>Detalles</Text>
+      <Text style={styles.titulo}>Datos del usuario</Text>
       <View style={{ borderWidth: 1, width: "100%", marginTop: 12 }} />
       <FlatList
         data={datos}
-        renderItem={({ item }: { item: producto }) => (
+        renderItem={({ item }: { item: usuario }) => (
           <View>
             <View style={{ borderWidth: 1, width: "100%", marginTop: 12 }} />
             <Text>Nickname: {item.nick}</Text>

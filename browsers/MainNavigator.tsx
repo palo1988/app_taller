@@ -26,7 +26,7 @@ function MyStack() {
     <Stack.Navigator initialRouteName="Welcome">
       <Stack.Screen name="Tabs" component={MyTabs} />
       <Tab.Screen name="Welcome" component={WelcomeScreen} />
-      <Tab.Screen name="juego" component={JuegoScreen} />
+      <Tab.Screen name="Juego" component={JuegoScreen} />
     </Stack.Navigator>
   );
 }
