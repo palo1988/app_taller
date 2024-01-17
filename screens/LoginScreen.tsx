@@ -76,14 +76,14 @@ export default function LoginScreen({ navigation }: any) {
     <View>
       <ImageBackground
         source={{
-          uri: "https://t3.ftcdn.net/jpg/05/79/59/68/360_F_579596848_TxZpIapoifodbdWuyciISYUpJQLuvcHT.jpg",
+          uri: "https://i.pinimg.com/736x/43/c5/b9/43c5b9caba61e0f530cf0bc4151075f2.jpg",
         }}
         style={styles.img}
       />
       <Text style={{ fontSize: 30 }}>Login</Text>
       <TextInput
         style={styles.input}
-        placeholderTextColor="#ededed"
+        placeholderTextColor="#1fada4"
         placeholder="Ingrese correo"
         onChangeText={(texto) => setCorreo(texto)}
         keyboardType="email-address"
@@ -93,19 +93,20 @@ export default function LoginScreen({ navigation }: any) {
 
       <TextInput
         style={styles.input}
-        placeholderTextColor="#ededed"
+        placeholderTextColor="#1fada4"
         placeholder="Ingresar contraseña"
         onChangeText={(texto) => setContrasenia(texto)}
         value={contrasenia}
+        secureTextEntry={true}
       />
 
-      <TouchableOpacity style={styles.button} onPress={() => total}>
+      <TouchableOpacity style={styles.button} onPress={() => total()}>
         <Text style={styles.buttonText}>INGRESAR</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
         style={styles.buttonReg}
-        onPress={() => navigation.navigate("Registro")}
+        onPress={() => navigation.navigate("Tabs")}
       >
         <Text style={styles.buttonTextReg}>REGISTRARSE</Text>
       </TouchableOpacity>
@@ -126,7 +127,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     paddingVertical: 15,
     width: "50%",
-    backgroundColor: "#168354",
+    backgroundColor: "#af7fd2",
   },
   buttonText: {
     textAlign: "center",
@@ -139,7 +140,7 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     paddingVertical: 20,
     width: "50%",
-    backgroundColor: "#166483",
+    backgroundColor: "#1a171c",
     borderWidth: 1,
     paddingLeft: 10,
     paddingRight: 10,

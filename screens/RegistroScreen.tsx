@@ -17,8 +17,6 @@ import { auth } from "../config/Config";
 import Camara from "../components/Camara";
 import { storage } from "../config/Config";
 import { uploadBytes, getDownloadURL } from "firebase/storage";
-//image picker
-import * as ImagePicker from "expo-image-picker";
 
 export default function RegistroScreen({ navigation }: any) {
   const [usuario, setUsuario] = useState("");
@@ -89,34 +87,37 @@ export default function RegistroScreen({ navigation }: any) {
   return (
     <View>
       <Text style={styles.encabezado}>Ingrese los datos:</Text>
-      <Text style={styles.titulo}>Usuario</Text>
+      <Text style={styles.titulo}>Nick</Text>
       <TextInput
         style={styles.ingreso}
         placeholder="ingrese Nick"
         onChangeText={(texto) => setnick(texto)}
       />
-      <Text style={styles.titulo}>Correo</Text>
+      <Text style={styles.titulo}>Edad</Text>
       <TextInput
         style={styles.ingreso}
         placeholder="Ingrese su edad"
         onChangeText={(texto) => setedad(texto)}
       />
+      <Text style={styles.titulo}>Correo</Text>
       <TextInput
         style={styles.ingreso}
         placeholder="Esriba su correo electrónico"
         onChangeText={(texto) => setcorreo(texto)}
+        autoCapitalize="none"
+        keyboardType="email-address"
       />
       <Text style={styles.titulo}>Contraseña</Text>
       <TextInput
         style={styles.ingreso}
         placeholder="Escriba su contraseña"
         onChangeText={(texto) => setcontrasenia(texto)}
+        textContentType="password"
       />
       <Camara capturar={recuperarUrl}></Camara>
       <TouchableOpacity style={styles.button} onPress={() => registroT()}>
         <Text style={styles.buttonText}>REGISTRARSE</Text>
       </TouchableOpacity>
-
     </View>
   );
 }
