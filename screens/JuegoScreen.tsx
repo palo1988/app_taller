@@ -233,6 +233,10 @@ export default function Juego({ navigation }: any) {
 
     logOut();
   }
+  function perfil() {
+    guardar(id, nick, contador);
+    navigation.navigate("Tabs");
+  }
 
   return (
     <View style={styles.container}>
@@ -287,6 +291,10 @@ export default function Juego({ navigation }: any) {
 
               <TouchableOpacity style={styles.btn} onPress={() => saveOut()}>
                 <Text style={styles.txtBtn}>Salir</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity style={styles.btn} onPress={() => perfil()}>
+                <Text style={styles.txtBtn}>Perfil</Text>
               </TouchableOpacity>
             </View>
 

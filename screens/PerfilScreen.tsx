@@ -1,9 +1,11 @@
-import { Alert, Button, StyleSheet, Text, View } from "react-native";
+import { Button, StyleSheet, Text, View } from "react-native";
 import React, { useEffect, useState } from "react";
-import { FlatList, TextInput } from "react-native-gesture-handler";
 
+//FIREBASE
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import { auth } from "../config/Config";
+import { ref, onValue } from "firebase/database";
 import { db } from "../config/Config";
-import { ref, set, onValue, update, remove } from "firebase/database";
 
 export default function PerfilScreen({ navigation }: any) {
   const [url, seturl] = useState([]);
@@ -12,7 +14,7 @@ export default function PerfilScreen({ navigation }: any) {
   const [nick, setnick] = useState("");
   const [edad, setedad] = useState("");
   const [datos, setDatos] = useState([]);
-
+  /*
   useEffect(() => {
     function leer() {
       const starCountRef = ref(db, "gamers/");
@@ -37,24 +39,80 @@ export default function PerfilScreen({ navigation }: any) {
     email: string;
     password: string;
     age: string;
-  };
+  };*/
+  const [id, setid] = useState("");
+  const [usuario, setusuario] = useState({});
+  const [player, setplayer] = useState({});
 
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const uid = user.uid;
+        console.log("Este es el UID: ", uid);
+        setid(uid);
+
+        const starCountRef = ref(db, "gamers/" + uid);
+        onValue(starCountRef, (snapshot) => {
+          const data = snapshot.val();
+          setusuario(data);
+          console.log("Datos del usuario:", data);
+        });
+      } else {
+        // User is signed out
+        console.log("Usuario desconectado");
+      }
+    });
+
+    return () => {
+      // Desuscribe la función cuando el componente se desmonta
+      unsubscribe();
+    };
+  }, []);
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const uid = user.uid;
+        console.log("Este es el UID: ", uid);
+        setid(uid);
+
+        const starCountRef = ref(db, "jugadores/" + uid);
+        onValue(starCountRef, (snapshot) => {
+          const data = snapshot.val();
+          setplayer(data);
+
+          console.log("Datos del usuario:", data);
+        });
+      } else {
+        // User is signed out
+        console.log("Usuario desconectado");
+      }
+    });
+
+    return () => {
+      // Desuscribe la función cuando el componente se desmonta
+      unsubscribe();
+    };
+  }, []);
+  function logout() {
+    signOut(auth)
+      .then(() => {
+        // Sign-out successful.
+        navigation.goBack();
+      })
+      .catch((error) => {
+        // An error happened.
+      });
+  }
   return (
     <View>
-      <Text style={styles.titulo}>Detalles</Text>
-      <View style={{ borderWidth: 1, width: "100%", marginTop: 12 }} />
-      <FlatList
-        data={datos}
-        renderItem={({ item }: { item: producto }) => (
-          <View>
-            <View style={{ borderWidth: 1, width: "100%", marginTop: 12 }} />
-            <Text>Nickname: {item.nick}</Text>
-            <Text>Correo: {item.email}</Text>
-            <Text>Contraseña: {item.password}</Text>
-            <Text>Edad: {item.age}</Text>
-          </View>
-        )}
-      />
+      <View>
+        <Text>WelcomeScreen</Text>
+        <Text>{usuario.nick}</Text>
+        <Text>{usuario.email}</Text>
+        <Text>{usuario.age}</Text>
+        <Text>{player.puntaje}</Text>
+        <Button title="Logout" onPress={() => logout()} />
+      </View>
     </View>
   );
 }
