@@ -75,7 +75,7 @@ export default function PerfilScreen({ navigation }: any) {
     signOut(auth)
       .then(() => {
         // Sign-out successful.
-        navigation.goBack();
+        navigation.navigate('Welcome');
       })
       .catch((error) => {
         // An error happened.
