@@ -36,56 +36,72 @@ export default function Juego({ navigation }: any) {
   const [contador, setContador] = useState(0);
   const [isModalVisible, setModalVisible] = useState(false);
   const [calaveradisparo, setcalaveradisparo] = useState(0);
-
+  const [age, setage] = useState("");
   const [nick, setNick] = useState(""); /////Borrar////
-  const [nick1, setnick1] = useState([]);
+  const [email, setemail] = useState("");
   const [calaveras, setcalaveras] = useState(""); /////Borrar/////
   const [sound, setSound] = useState(Audio);
   const [calaveras1, setcalaveras1] = useState([]);
-
-  onAuthStateChanged(auth, (user) => {
+  const [id, setid] = useState("");
+  const [usuario, setusuario] = useState({});
+  //comprueba que este loggeado
+  /* onAuthStateChanged(auth, (user) => {
     if (user) {
       const uid = user.uid;
       const mail = user.email;
       console.log("esta es la id", uid);
       console.log("correo ", mail);
       navigation.navigate("Juego");
-      setNick(uid);
+      setid(uid);
+
+      
     } else {
     }
   });
+  
 
   useEffect(() => {
-    function leer() {
-      const starCountRef = ref(db, "pruebareg/" + nick);
+    
+      const starCountRef = ref(db, "gamers/" + id);
       onValue(starCountRef, (snapshot) => {
         const data = snapshot.val();
-        console.log("estaes la parte  data ", data);
-        setnick1(data);
+
+        setusuario(data);
+        console.log("este es el usuario de leer ", usuario);
       });
-    }
-    leer();
+    
+    
   }, []);
 
+  */
   useEffect(() => {
-    function leer1() {
-      const dbRef = ref(getDatabase());
-      get(child(dbRef, `pruebareg/${nick}`))
-        .then((snapshot) => {
-          if (snapshot.exists()) {
-            console.log(snapshot.val());
-            console.log("este es leer1", nick);
-          } else {
-            console.log("No data available");
-          }
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    }
-    leer1();
-  }, []);
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const uid = user.uid;
+        console.log("Este es el UID: ", uid);
+        setid(uid);
 
+        const starCountRef = ref(db, "gamers/" + uid + "/nick");
+        onValue(starCountRef, (snapshot) => {
+          const data = snapshot.val();
+          setNick(data);
+
+          console.log(nick);
+
+          guardar(user.uid, nick, contador);
+          console.log("Datos del usuario:", data);
+        });
+      } else {
+        // User is signed out
+        console.log("Usuario desconectado");
+      }
+    });
+
+    return () => {
+      // Desuscribe la función cuando el componente se desmonta
+      unsubscribe();
+    };
+  }, []);
   useEffect(() => {
     // const temporizador = setInterval(() => {
     //   setTiempo((tiempoAnterior) => tiempoAnterior-1)
@@ -123,13 +139,13 @@ export default function Juego({ navigation }: any) {
   }
 
   //Función para guardar los datos en un json
-  function guardar(nick: string, calaveras: string, puntaje: number) {
+  function guardar(id: string, nick: string, puntaje: number) {
     /* Se elimina la línea 45 debido a que ya se encuentra
   implementada en el archivo Config.js*/
     // const db = getDatabase();
-    set(ref(db, "jugadores/" + nick), {
-      nick: nick,
-      calavera: calaveras,
+    set(ref(db, "jugadores/" + id), {
+      Nick: nick,
+
       puntaje: contador,
     });
   }
@@ -213,7 +229,7 @@ export default function Juego({ navigation }: any) {
   function saveOut() {
     //puntuacion();
 
-    guardar(nick, calaveras, contador);
+    guardar(id, nick, contador);
 
     logOut();
   }
