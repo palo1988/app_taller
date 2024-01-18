@@ -40,40 +40,22 @@ export default function Juego({ navigation }: any) {
   const [nick, setNick] = useState(""); /////Borrar////
   const [email, setemail] = useState("");
   const [calaveras, setcalaveras] = useState(""); /////Borrar/////
-  const [sound, setSound] = useState(Audio);
+  const [sound, setSound] = useState<Audio.Sound | undefined>(undefined);
   const [calaveras1, setcalaveras1] = useState([]);
   const [id, setid] = useState("");
   const [usuario, setusuario] = useState({});
   //comprueba que este loggeado
-  /* onAuthStateChanged(auth, (user) => {
-    if (user) {
-      const uid = user.uid;
-      const mail = user.email;
-      console.log("esta es la id", uid);
-      console.log("correo ", mail);
-      navigation.navigate("Juego");
-      setid(uid);
+  /*
+  async function playSound() {
+    console.log("Loading Sound");
+    const { sound } = await Audio.Sound.createAsync(
+      require("app_taller/assets/img/9-mm-gunshot.mp3")
+    );
+    setSound(sound);
 
-      
-    } else {
-    }
-  });
-  
-
-  useEffect(() => {
-    
-      const starCountRef = ref(db, "gamers/" + id);
-      onValue(starCountRef, (snapshot) => {
-        const data = snapshot.val();
-
-        setusuario(data);
-        console.log("este es el usuario de leer ", usuario);
-      });
-    
-    
-  }, []);
-
-  */
+    console.log("Playing Sound");
+    await sound.playAsync();
+  }*/
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -135,7 +117,7 @@ export default function Juego({ navigation }: any) {
 
   function contar() {
     setContador(contador + 1);
-    //playSound();
+    playSound();
   }
 
   //Función para guardar los datos en un json

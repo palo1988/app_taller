@@ -106,12 +106,12 @@ export default function Camara(props: any) {
     <View>
       <Text>Camara</Text>
       <Image source={{ uri: imagen }} style={styles.img} />
-      {/* <ImageBackground
+      <ImageBackground
         source={{
-          uri: "https://previews.123rf.com/images/hatza/hatza1312/hatza131200050/24578578-arte-pop-de-c%C3%A1mara.jpg",
+          uri: "https://wegaelite.com/10362-home_default/stencil-aerografia-calavera-022-monton.jpg",
         }}
         style={styles.img1}
-    />*/}
+      />
       <TouchableOpacity style={styles.button} onPress={() => pickImage()}>
         <Text style={styles.buttonText}>ABRIR GALERIA</Text>
       </TouchableOpacity>

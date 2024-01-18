@@ -6,6 +6,7 @@ import {
   Text,
   View,
   TouchableOpacity,
+  ImageBackground,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { FlatList, TextInput } from "react-native-gesture-handler";
@@ -147,6 +148,12 @@ export default function RegistroScreen({ navigation }: any) {
 
   return (
     <View>
+      <ImageBackground
+        source={{
+          uri: "https://wegaelite.com/10362-home_default/stencil-aerografia-calavera-022-monton.jpg",
+        }}
+        style={styles.img1}
+      />
       <Text style={styles.encabezado}>Ingrese los datos:</Text>
       <Text style={styles.titulo}>Nick</Text>
       <TextInput
@@ -163,7 +170,7 @@ export default function RegistroScreen({ navigation }: any) {
       <Text style={styles.titulo}>Correo</Text>
       <TextInput
         style={styles.ingreso}
-        placeholder="Esriba su correo electrónico"
+        placeholder="Escriba su correo electrónico"
         onChangeText={(texto) => setcorreo(texto)}
         autoCapitalize="none"
         keyboardType="email-address"
@@ -186,6 +193,12 @@ export default function RegistroScreen({ navigation }: any) {
 }
 
 const styles = StyleSheet.create({
+  img1: {
+    flex: 5,
+    width: 800,
+    height: 800,
+    resizeMode: "center",
+  },
   titulo: {
     fontSize: 18,
     fontFamily: "monospace",
