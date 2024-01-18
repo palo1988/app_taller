@@ -15,10 +15,11 @@ import {
   getAuth,
   signOut,
   createUserWithEmailAndPassword,
+  onAuthStateChanged,
 } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import { auth, db } from "../config/Config";
-import { getDatabase, ref, set, onValue } from "firebase/database";
+import { getDatabase, ref, set, onValue, child, get } from "firebase/database";
 
 import { Modal } from "react-native";
 import Skull from "../components/Skull";
@@ -37,35 +38,53 @@ export default function Juego({ navigation }: any) {
   const [calaveradisparo, setcalaveradisparo] = useState(0);
 
   const [nick, setNick] = useState(""); /////Borrar////
+  const [nick1, setnick1] = useState([]);
   const [calaveras, setcalaveras] = useState(""); /////Borrar/////
   const [sound, setSound] = useState(Audio);
+  const [calaveras1, setcalaveras1] = useState([]);
+
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      const uid = user.uid;
+      const mail = user.email;
+      console.log("esta es la id", uid);
+      console.log("correo ", mail);
+      navigation.navigate("Juego");
+      setNick(uid);
+    } else {
+    }
+  });
 
   useEffect(() => {
     function leer() {
-      const starCountRef = ref(db, "pruebareg/");
+      const starCountRef = ref(db, "pruebareg/" + nick);
       onValue(starCountRef, (snapshot) => {
         const data = snapshot.val();
-
-        const dataTemp: any = Object.keys(data).map((nick) => ({
-          nick,
-          ...data[nick],
-        }));
-
-        setcalaveras(dataTemp);
-        setNick(nick);
+        console.log("estaes la parte  data ", data);
+        setnick1(data);
       });
     }
-
     leer();
-    console.log(calaveras);
   }, []);
 
-  type producto = {
-    nick: string;
-    email: string;
-    password: string;
-    age: string;
-  };
+  useEffect(() => {
+    function leer1() {
+      const dbRef = ref(getDatabase());
+      get(child(dbRef, `pruebareg/${nick}`))
+        .then((snapshot) => {
+          if (snapshot.exists()) {
+            console.log(snapshot.val());
+            console.log("este es leer1", nick);
+          } else {
+            console.log("No data available");
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+    leer1();
+  }, []);
 
   useEffect(() => {
     // const temporizador = setInterval(() => {
@@ -103,41 +122,8 @@ export default function Juego({ navigation }: any) {
     //playSound();
   }
 
-  ////////////////////////////////////////////////////////////////
-
-  // function reiniciarTemporizador() {
-  //   setTiempo(10); // Restablece el valor del temporizador a 10 segundos
-  // }
-
-  /////////////////////////////////////////////////////////////////
-
-  function registrar() {
-    createUserWithEmailAndPassword(auth, nick, calaveras)
-      .then((userCredential) => {
-        // Signed in
-        const user = userCredential.user;
-
-        guardar(nick, calaveras);
-
-        Alert.alert(
-          "REGISTRO EXITOSO",
-          "Ahora destruye la mayor cantidad de calaveras en el tiempo establecido...!!!"
-        );
-        navigation.navigate("Juego");
-
-        // ...
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        Alert.alert("Error", "Ingrese sus datos nuevamente");
-        console.log(errorMessage);
-        // ..
-      });
-  }
-
   //Función para guardar los datos en un json
-  function guardar(nick: string, calaveras: string) {
+  function guardar(nick: string, calaveras: string, puntaje: number) {
     /* Se elimina la línea 45 debido a que ya se encuentra
   implementada en el archivo Config.js*/
     // const db = getDatabase();
@@ -167,6 +153,7 @@ export default function Juego({ navigation }: any) {
 
         navigation.navigate("Login");
         setModalVisible(false);
+        console.log("cerro la sesion");
       })
       .catch((error) => {
         // An error happened.
@@ -225,7 +212,8 @@ export default function Juego({ navigation }: any) {
 
   function saveOut() {
     //puntuacion();
-    guardar(nick, calaveras);
+
+    guardar(nick, calaveras, contador);
 
     logOut();
   }
