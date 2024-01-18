@@ -1,4 +1,4 @@
-import { Button, StyleSheet, Text, View, Image } from "react-native";
+import { Button, StyleSheet, Text, View, Image, ImageBackground } from "react-native";
 import React, { useEffect, useState } from "react";
 
 //FIREBASE
@@ -126,13 +126,13 @@ export default function PerfilScreen({ navigation }: any) {
   }, []);
 
 
-
-
-  
-
-
   return (
     <View>
+      <ImageBackground
+        source={{
+          uri: "https://i.pinimg.com/736x/48/2a/55/482a557b575d882a32106c26b6f61024.jpg",
+        }} // Ruta de la imagen de fondo
+        style={styles.backgroundImage}>
       <View>
       <Text style={styles.titulo}>Datos del usuario</Text>
       <View/>
@@ -150,6 +150,7 @@ export default function PerfilScreen({ navigation }: any) {
         </View>
         <Button title="Logout" onPress={() => logout()} color={'#e96d90'}/>
       </View>
+      </ImageBackground>
     </View>
   );
 }
@@ -179,6 +180,12 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     marginTop: 10,
     marginBottom: 10,
+  },
+
+  backgroundImage: {
+    width: 400,
+    height: 750,
+    resizeMode: 'cover',
   },
 
 });
