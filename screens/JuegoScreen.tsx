@@ -117,7 +117,7 @@ export default function Juego({ navigation }: any) {
 
   function contar() {
     setContador(contador + 1);
-    playSound();
+    // playSound();
   }
 
   //Función para guardar los datos en un json
