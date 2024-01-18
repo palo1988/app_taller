@@ -21,30 +21,26 @@ import { uploadBytes, getDownloadURL } from "firebase/storage";
 export default function RegistroScreen({ navigation }: any) {
   const [usuario, setUsuario] = useState("");
 
-  const [url, seturl] = useState([]);
+  const [url, seturl] = useState("");
 
   const [correo, setcorreo] = useState("");
   const [contrasenia, setcontrasenia] = useState("");
   const [nick, setnick] = useState("");
-  const [email, setemail] = useState("");
+
   const [edad, setedad] = useState("");
+  const [userid, setuserid] = useState("");
 
-  //GUARDAR
-  function guardar(nick: string, edad: string) {
-    set(ref(db, "pruebareg/" + nick), {
-      age: edad,
-    });
-    Alert.alert("Mensaje", "Datos guardados");
-  }
-
-  function registro() {
+  /*async function registro() {
     createUserWithEmailAndPassword(auth, correo, contrasenia)
       .then((userCredential) => {
         // Signed up
         const user = userCredential.user;
 
+        console.log("este es el user", user.uid);
+        setuserid(user.uid);
         navigation.navigate("Login");
 
+        console.log("este es el userid de registro", userid);
         //console.log('Registro exitoso')
       })
       .catch((error) => {
@@ -74,16 +70,81 @@ export default function RegistroScreen({ navigation }: any) {
           }
         }
       });
+  }*/
+  async function registro() {
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        correo,
+        contrasenia
+      );
+      const user = userCredential.user;
+
+      console.log("este es el user", user.uid);
+      setuserid(user.uid);
+      navigation.navigate("Login");
+
+      console.log("este es el userid de registro", userid);
+      // console.log('Registro exitoso')
+      guardar(user.uid, nick, edad, correo, url);
+    } catch (error: any) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+
+      console.log(errorCode);
+
+      if (errorCode === "auth/email-already-in-use") {
+        Alert.alert("Error", "El correo ingresado ya está en uso");
+      }
+
+      switch (errorCode) {
+        case "auth/invalid-email": {
+          Alert.alert("Error", "Las credenciales son incorrectas");
+          // statements;
+          break;
+        }
+        case "auth/missing-password": {
+          Alert.alert("Error", "La contraseña no se ha enviado");
+          // statements;
+          break;
+        }
+        default: {
+          // statements;
+          Alert.alert(errorCode, errorMessage);
+          break;
+        }
+      }
+    }
   }
-  function registroT() {
-    registro();
-    guardar(nick, edad);
+
+  //GUARDAR
+  function guardar(
+    id: string,
+    nick: string,
+    edad: string,
+    correo: string,
+    url: string
+  ) {
+    set(ref(db, "gamers/" + id), {
+      nick: nick,
+      age: edad,
+      email: correo,
+      url: url,
+    });
+    Alert.alert("Mensaje", "Datos guardados");
   }
   function recuperarUrl(direccion: any) {
+    console.log(direccion);
     seturl(direccion);
     //return direccion
     console.log(url);
   }
+
+  function registroT() {
+    registro();
+    //guardar(userid, nick, edad, correo, url);
+  }
+
   return (
     <View>
       <Text style={styles.encabezado}>Ingrese los datos:</Text>
@@ -113,11 +174,13 @@ export default function RegistroScreen({ navigation }: any) {
         placeholder="Escriba su contraseña"
         onChangeText={(texto) => setcontrasenia(texto)}
         textContentType="password"
+        secureTextEntry={true}
       />
       <Camara capturar={recuperarUrl}></Camara>
       <TouchableOpacity style={styles.button} onPress={() => registroT()}>
         <Text style={styles.buttonText}>REGISTRARSE</Text>
       </TouchableOpacity>
+      <Text> {url}</Text>
     </View>
   );
 }

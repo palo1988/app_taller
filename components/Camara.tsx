@@ -14,6 +14,7 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import * as ImagePicker from "expo-image-picker";
 
 export default function Camara(props: any) {
+  console.log(props);
   const [url, seturl] = useState("");
   const [imagen, setImagen] = useState(
     " https://www.shutterstock.com/image-vector/dj-avatar-male-musician-character-600nw-1985403074.jpg"
@@ -93,7 +94,7 @@ export default function Camara(props: any) {
       const imageURL = await getDownloadURL(storageRef);
       console.log("URL de desacarga de la imagen", imageURL);
       seturl(imageURL);
-      props.recuperarUrl(imageURL);
+      props.capturar(imageURL);
     } catch (error) {
       console.error(error);
     }
