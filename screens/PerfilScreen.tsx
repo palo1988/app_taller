@@ -1,4 +1,4 @@
-import { Button, StyleSheet, Text, View } from "react-native";
+import { Button, StyleSheet, Text, View, Image } from "react-native";
 import React, { useEffect, useState } from "react";
 
 //FIREBASE
@@ -30,7 +30,7 @@ export default function PerfilScreen({ navigation }: any) {
         console.log("Este es el UID: ", uid);
         setid(uid);
 
-        const starCountRef = ref(db, "gamers/" + uid);
+        const starCountRef = ref(db, "gamers/" + uid+"/url");
         onValue(starCountRef, (snapshot) => {
           const data = snapshot.val();
           setusuario(data);
@@ -47,6 +47,7 @@ export default function PerfilScreen({ navigation }: any) {
       unsubscribe();
     };
   }, []);
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -135,25 +136,49 @@ export default function PerfilScreen({ navigation }: any) {
       <View>
       <Text style={styles.titulo}>Datos del usuario</Text>
       <View/>
-
-          <View>
-            <View style={{ borderWidth: 1, width: "100%", marginTop: 12 }} />
-            <Text>ID: {id}</Text>
-        <Text>Nombre: {usuario.nick}</Text>
-        <Text>Email: {usuario.email}</Text>
-        <Text>Edad: {usuario.age}</Text>
-        <Text>Puntaje: {player.puntaje}</Text>
+        <View>
+        <View style={{ borderWidth: 1, width: "100%", marginTop: 12 }} />
+        <Text style={styles.texto}>ID: {id}</Text>
+        <Text style={styles.texto}>Nickname: {usuario.nick}</Text>
+        <Text style={styles.texto}>Email: {usuario.email}</Text>
+        <Text style={styles.texto}>Edad: {usuario.age}</Text>
+        <Text style={styles.texto}>Puntaje: {player.puntaje}</Text>
+        {usuario.url && (
+            <Image source={{ uri: usuario.url }} style={styles.imagen} />
+          )}
+        
         </View>
-        <Button title="Logout" onPress={() => logout()} />
+        <Button title="Logout" onPress={() => logout()} color={'#e96d90'}/>
       </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  titulo: {
-    fontSize: 20,
-    textAlign: "center",
-    marginTop: 10,
+
+  titulo:{
+    fontSize:25,
+    fontFamily:'monospace',
+    marginTop:10,
+    marginBottom:10,
+    textAlign:'center',
   },
+
+  texto:{
+    fontSize:20,
+    alignSelf:'center',
+    fontFamily:'monospace',
+    marginTop:10,
+    marginBottom:10,
+  },
+
+  imagen: {
+    width: 150,
+    height: 150,
+    borderRadius: 75,
+    alignSelf: "center",
+    marginTop: 10,
+    marginBottom: 10,
+  },
+
 });
