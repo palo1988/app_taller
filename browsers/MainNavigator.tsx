@@ -13,7 +13,7 @@ const Stack = createStackNavigator();
 
 function MyTabs() {
   return (
-    <Tab.Navigator initialRouteName="Registro">
+    <Tab.Navigator initialRouteName="Perfil">
       <Tab.Screen name="Registro" component={RegistroScreen} />
       <Tab.Screen name="Perfil" component={PerfilScreen} />
     </Tab.Navigator>
@@ -28,7 +28,6 @@ function MyStack() {
       <Tab.Screen name="Login" component={LoginScreen} />
       <Tab.Screen name="Juego" component={JuegoScreen} />
       <Tab.Screen name="Registro" component={RegistroScreen} />
-      <Tab.Screen name="Perfil" component={PerfilScreen} />
     </Stack.Navigator>
   );
 }

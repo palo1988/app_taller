@@ -1,4 +1,5 @@
 import { Button, StyleSheet, Text, View, Image, ImageBackground } from "react-native";
+
 import React, { useEffect, useState } from "react";
 
 //FIREBASE
@@ -9,7 +10,6 @@ import { db } from "../config/Config";
 import { FlatList } from "react-native-gesture-handler";
 
 export default function PerfilScreen({ navigation }: any) {
-  
   const [url, seturl] = useState([]);
   const [correo, setcorreo] = useState("");
   const [contrasenia, setcontrasenia] = useState("");
@@ -20,8 +20,6 @@ export default function PerfilScreen({ navigation }: any) {
   const [id, setid] = useState("");
   const [usuario, setusuario] = useState({});
   const [player, setplayer] = useState({});
-  
-
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -30,7 +28,7 @@ export default function PerfilScreen({ navigation }: any) {
         console.log("Este es el UID: ", uid);
         setid(uid);
 
-        const starCountRef = ref(db, "gamers/" + uid+"/url");
+        const starCountRef = ref(db, "gamers/" + uid + "/url");
         onValue(starCountRef, (snapshot) => {
           const data = snapshot.val();
           setusuario(data);
@@ -84,8 +82,6 @@ export default function PerfilScreen({ navigation }: any) {
       });
   }
 
-  
-
   // Función para obtener datos del usuario
   const obtenerDatosUsuario = (collectionPath: string) => {
     const uid = auth.currentUser?.uid;
@@ -125,7 +121,6 @@ export default function PerfilScreen({ navigation }: any) {
     };
   }, []);
 
-
   return (
     <View>
       <ImageBackground
@@ -134,21 +129,20 @@ export default function PerfilScreen({ navigation }: any) {
         }} // Ruta de la imagen de fondo
         style={styles.backgroundImage}>
       <View>
-      <Text style={styles.titulo}>Datos del usuario</Text>
-      <View/>
+        <Text style={styles.titulo}>Datos del usuario</Text>
+        <View />
         <View>
-        <View style={{ borderWidth: 1, width: "100%", marginTop: 12 }} />
-        <Text style={styles.texto}>ID: {id}</Text>
-        <Text style={styles.texto}>Nickname: {usuario.nick}</Text>
-        <Text style={styles.texto}>Email: {usuario.email}</Text>
-        <Text style={styles.texto}>Edad: {usuario.age}</Text>
-        <Text style={styles.texto}>Puntaje: {player.puntaje}</Text>
-        {usuario.url && (
+          <View style={{ borderWidth: 1, width: "100%", marginTop: 12 }} />
+          <Text style={styles.texto}>ID: {id}</Text>
+          <Text style={styles.texto}>Nickname: {usuario.nick}</Text>
+          <Text style={styles.texto}>Email: {usuario.email}</Text>
+          <Text style={styles.texto}>Edad: {usuario.age}</Text>
+          <Text style={styles.texto}>Puntaje: {player.puntaje}</Text>
+          {usuario.url && (
             <Image source={{ uri: usuario.url }} style={styles.imagen} />
           )}
-        
         </View>
-        <Button title="Logout" onPress={() => logout()} color={'#e96d90'}/>
+        <Button title="Logout" onPress={() => logout()} color={"#e96d90"} />
       </View>
       </ImageBackground>
     </View>
@@ -156,21 +150,20 @@ export default function PerfilScreen({ navigation }: any) {
 }
 
 const styles = StyleSheet.create({
-
-  titulo:{
-    fontSize:25,
-    fontFamily:'monospace',
-    marginTop:10,
-    marginBottom:10,
-    textAlign:'center',
+  titulo: {
+    fontSize: 25,
+    fontFamily: "monospace",
+    marginTop: 10,
+    marginBottom: 10,
+    textAlign: "center",
   },
 
-  texto:{
-    fontSize:20,
-    alignSelf:'center',
-    fontFamily:'monospace',
-    marginTop:10,
-    marginBottom:10,
+  texto: {
+    fontSize: 20,
+    alignSelf: "center",
+    fontFamily: "monospace",
+    marginTop: 10,
+    marginBottom: 10,
   },
 
   imagen: {
