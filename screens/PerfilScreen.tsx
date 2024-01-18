@@ -6,7 +6,6 @@ import { db } from "../config/Config";
 import { ref, set, onValue, update, remove } from "firebase/database";
 
 export default function PerfilScreen({ navigation }: any) {
-
   const [url, seturl] = useState([]);
   const [correo, setcorreo] = useState("");
   const [contrasenia, setcontrasenia] = useState("");
@@ -14,32 +13,31 @@ export default function PerfilScreen({ navigation }: any) {
   const [edad, setedad] = useState("");
   const [datos, setDatos] = useState([]);
 
-    useEffect(() => {
-      function leer() {
-        const starCountRef = ref(db, "pruebareg/");
-        onValue(starCountRef, (snapshot) => {
-          const data = snapshot.val();
-  
-          const dataTemp: any = Object.keys(data).map((nick) => ({
-            nick,
-            ...data[nick],
-          }));
-  
-          setDatos(dataTemp);
-        });
-      }
-  
-      leer();
-      console.log(datos);
-    }, []);
+  useEffect(() => {
+    function leer() {
+      const starCountRef = ref(db, "gamers/");
+      onValue(starCountRef, (snapshot) => {
+        const data = snapshot.val();
 
+        const dataTemp: any = Object.keys(data).map((nick) => ({
+          nick,
+          ...data[nick],
+        }));
 
-    type producto = {
-      nick: string;
-      email: string;
-      password: string;
-      age:string;
-    };
+        setDatos(dataTemp);
+      });
+    }
+
+    leer();
+    console.log(datos);
+  }, []);
+
+  type producto = {
+    nick: string;
+    email: string;
+    password: string;
+    age: string;
+  };
 
   return (
     <View>
@@ -58,15 +56,13 @@ export default function PerfilScreen({ navigation }: any) {
         )}
       />
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
-
-  titulo:{
-    fontSize:20,
-    textAlign:'center',
-    marginTop:10,
-},
-
-})
+  titulo: {
+    fontSize: 20,
+    textAlign: "center",
+    marginTop: 10,
+  },
+});
