@@ -44,33 +44,24 @@ export default function Juego({ navigation }: any) {
   //comprueba que este loggeado
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        const uid = user.uid;
-        console.log("Este es el UID: ", uid);
-        setid(uid);
-
-        const starCountRef = ref(db, "gamers/" + uid + "/nick");
-        onValue(starCountRef, (snapshot) => {
-          const data = snapshot.val();
-          setNick(data);
-
-          console.log(nick);
-
-          guardar(user.uid, nick, contador);
-          console.log("Datos del usuario:", data);
+    function leer1() {
+      const dbRef = ref(getDatabase());
+      get(child(dbRef, `pruebareg/${nick}`))
+        .then((snapshot) => {
+          if (snapshot.exists()) {
+            console.log(snapshot.val());
+            console.log("este es leer1", nick);
+          } else {
+            console.log("No data available");
+          }
+        })
+        .catch((error) => {
+          console.error(error);
         });
-      } else {
-        // User is signed out
-        console.log("Usuario desconectado");
-      }
-    });
-
-    return () => {
-      // Desuscribe la función cuando el componente se desmonta
-      unsubscribe();
-    };
+    }
+    leer1();
   }, []);
+
   useEffect(() => {
     //setInterval: Función exclusiva de RN para medir el tiempo
     const temporizador = setInterval(() => {
