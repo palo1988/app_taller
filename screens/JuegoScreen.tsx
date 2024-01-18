@@ -36,33 +36,78 @@ export default function Juego({ navigation }: any) {
   const [contador, setContador] = useState(0);
   const [isModalVisible, setModalVisible] = useState(false);
   const [calaveradisparo, setcalaveradisparo] = useState(0);
+  const [age, setage] = useState("");
   const [nick, setNick] = useState(""); /////Borrar////
-  const [sound, setSound] = useState(null);
+  const [email, setemail] = useState("");
+  const [calaveras, setcalaveras] = useState(""); /////Borrar/////
+  const [sound, setSound] = useState(Audio);
+  const [calaveras1, setcalaveras1] = useState([]);
   const [id, setid] = useState("");
   const [usuario, setusuario] = useState({});
-
   //comprueba que este loggeado
+  /* onAuthStateChanged(auth, (user) => {
+    if (user) {
+      const uid = user.uid;
+      const mail = user.email;
+      console.log("esta es la id", uid);
+      console.log("correo ", mail);
+      navigation.navigate("Juego");
+      setid(uid);
+
+      
+    } else {
+    }
+  });
+  
 
   useEffect(() => {
-    function leer1() {
-      const dbRef = ref(getDatabase());
-      get(child(dbRef, `pruebareg/${nick}`))
-        .then((snapshot) => {
-          if (snapshot.exists()) {
-            console.log(snapshot.val());
-            console.log("este es leer1", nick);
-          } else {
-            console.log("No data available");
-          }
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    }
-    leer1();
+    
+      const starCountRef = ref(db, "gamers/" + id);
+      onValue(starCountRef, (snapshot) => {
+        const data = snapshot.val();
+
+        setusuario(data);
+        console.log("este es el usuario de leer ", usuario);
+      });
+    
+    
   }, []);
 
+  */
   useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const uid = user.uid;
+        console.log("Este es el UID: ", uid);
+        setid(uid);
+
+        const starCountRef = ref(db, "gamers/" + uid + "/nick");
+        onValue(starCountRef, (snapshot) => {
+          const data = snapshot.val();
+          setNick(data);
+
+          console.log(nick);
+
+          guardar(user.uid, nick, contador);
+          console.log("Datos del usuario:", data);
+        });
+      } else {
+        // User is signed out
+        console.log("Usuario desconectado");
+      }
+    });
+
+    return () => {
+      // Desuscribe la función cuando el componente se desmonta
+      unsubscribe();
+    };
+  }, []);
+  useEffect(() => {
+    // const temporizador = setInterval(() => {
+    //   setTiempo((tiempoAnterior) => tiempoAnterior-1)
+    // }, 1000 //Milisegundos
+    // )
+
     //setInterval: Función exclusiva de RN para medir el tiempo
     const temporizador = setInterval(() => {
       setTiempo((tiempoAnterior) => {
@@ -95,12 +140,25 @@ export default function Juego({ navigation }: any) {
 
   //Función para guardar los datos en un json
   function guardar(id: string, nick: string, puntaje: number) {
+    /* Se elimina la línea 45 debido a que ya se encuentra
+  implementada en el archivo Config.js*/
+    // const db = getDatabase();
     set(ref(db, "jugadores/" + id), {
       Nick: nick,
 
       puntaje: contador,
     });
   }
+
+  // const jugador = setNick(onValue) ;
+
+  // Función para guardar en Firebase
+  /* function puntuacion() {
+    set(ref(db, "puntuacion/" + nick), {
+      nick: nick,
+      puntaje: contador,
+    });
+  }*/
 
   // const app = initializeApp(firebaseConfig);
   function logOut() {
@@ -145,21 +203,17 @@ export default function Juego({ navigation }: any) {
   }*/
 
   ///////////////
-
   /*
   async function playSound() {
     console.log("Loading Sound");
     const { sound } = await Audio.Sound.createAsync(
       require("../assets/9-mm-gunshot.mp3")
     );
-    
+    setSound(Audio);
+
     console.log("Playing Sound");
     await sound.playAsync();
-  
-    // Establece el estado 'sound' en lugar de 'Audio'
-    setSound(sound);
   }
-  
 
   async function playSound2() {
     console.log("Loading Sound");
